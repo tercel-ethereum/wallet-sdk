@@ -1,0 +1,11 @@
+{
+  "name": "wallet-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "bignumber.js": "^9.0.0",
+    "ethers": "^5.1.0",
+    "web3": "^v1.3.4"
+  }
+}
