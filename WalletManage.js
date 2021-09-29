@@ -2,30 +2,38 @@ import { Wallet } from 'ethers'
 
 class WalletManage {
     constructor() {
-        
+        this.wallet = null;
     }
 
-    show(wallet) {
-        let mnemonic = wallet.mnemonic;
+    connect(provider) {
+        this.wallet = this.wallet.connect(provider);
+        return this.wallet;
+    }
+
+    show() {
+        let mnemonic = this.wallet.mnemonic;
         console.log("mnemonic:",mnemonic);
 
-        let privateKey = wallet.privateKey;
+        let privateKey = this.wallet.privateKey;
         console.log("privateKey:",privateKey);
 
-        let address = wallet.address;
+        let address = this.wallet.address;
         console.log('address:', address)
     }
 
     newWallet() {
-        return Wallet.createRandom();
+        this.wallet = Wallet.createRandom();
+        return this.wallet;
     }
 
     fromMnemonic(monic) {
-        return Wallet.fromMnemonic(monic);
+        this.wallet = Wallet.fromMnemonic(monic);
+        return this.wallet;
     }
 
     fromPrivateKey(privateKey) {
-        return new Wallet(privateKey);
+        this.wallet = new Wallet(privateKey);
+        return this.wallet;
     }
    
 }
