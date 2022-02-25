@@ -7,11 +7,10 @@ class ERC20Token {
         this.chain = chain;
         this.address = address;
         this.contract = new ethers.Contract(address, this.abi, chain.provider);
-        this.contractWithSigner = null;
     }
 
     connect() {
-        this.contractWithSigner = this.contract.connect(this.chain.wallet);
+        this.contract = this.contract.connect(this.chain.wallet);
     }
 
     async balanceOf(user) {
@@ -81,7 +80,7 @@ class ERC20Token {
         }
 
         let total = await this.contract.totalSupply();
-        let tx = await this.contractWithSigner.approve(spender, total);
+        let tx = await this.contract.approve(spender, total);
         return tx;
     }
 
@@ -90,7 +89,7 @@ class ERC20Token {
             return numberFromDecimals(10, 30);
         }
         let _token = await this.info();
-        let res = await this.contractWithSigner.allowance(user, spender);
+        let res = await this.contract.allowance(user, spender);
         res = numberFromDecimals(res, _token.decimals);
         return res;
     }
@@ -98,7 +97,7 @@ class ERC20Token {
     async transfer(to, amount) {
         let _token = await this.info();
         amount = numberToDecimals(amount, _token.decimals);
-        let tx = await this.contractWithSigner.transfer(to, amount);
+        let tx = await this.contract.transfer(to, amount);
         return tx;
     }
 }
