@@ -30,9 +30,15 @@ async function testToken() {
     res = await usdtToken.balanceOf();
     console.log('balanceOf before:', res);
     await usdtToken.allowance(wallet.address, chain.ZERO_ADDR);
-    // res = await usdtToken.transfer(chain.ZERO_ADDR, 2);
-    // console.log('transfer:', res.hash);
-    // await res.wait();
+
+    res = await chain.getBalance(wallet.address);
+    console.log('eth:', res);
+    if(res > 0) {
+        res = await usdtToken.approve(chain.ZERO_ADDR);
+        console.log('approve:', res.hash);
+        await res.wait();
+    }
+    
     res = await usdtToken.tokenBalanceOf();
     console.log('balanceOf after:', res);
 }
